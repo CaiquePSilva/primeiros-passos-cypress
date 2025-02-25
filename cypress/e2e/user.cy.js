@@ -1,13 +1,12 @@
 import userData from '../fixtures/userData.json'
+import LoginPage from './pages/loginPage'
+
+const login = new LoginPage()
 
 describe('orange HRM tests', () => {
 
   const selectorsList = {
-    usernameField: "[name='username']",
-    passwordField: "[name='password']",
-    loginButton: "[type='submit']",
     dashboardGrid: ".orangehrm-dashboard-grid",
-    wrongCredentialAlert: "[role='alert']",
     myInfoButton: ":nth-child(6) > .oxd-main-menu-item",
     firstNameField: "[name='firstName']",
     middleNameField: "[name='middleName']",
@@ -20,14 +19,17 @@ describe('orange HRM tests', () => {
     dateCloseButton: ".--close",
     dateCloseButton2: ".--close",
     saveButton: "[type='submit']",
-    Body: "body"
+    Body: "body",
+    nationality: ".oxd-select-text-input",
+    martialStatus: ".oxd-select-text-input",
+    bloodType: ".oxd-select-text-input"
 
   }
 
   it.only('user info Update', () => {
-
-    cy.visit('/auth/login')
-    cy.get(selectorsList.usernameField).type(userData.userSuccess.username)
+      login.accessLoginPage()
+      login.loginWithUser(userData.userSuccess.username, userData.userSuccess.password)
+/*     cy.get(selectorsList.usernameField).type(userData.userSuccess.username)
     cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
     cy.get(selectorsList.loginButton).click()
     cy.location('pathname').should('equal', '/web/index.php/dashboard/index')
@@ -45,7 +47,12 @@ describe('orange HRM tests', () => {
     cy.get(selectorsList.dateCloseButton2).click()
     cy.get(selectorsList.saveButton).eq(0).click()
     cy.get(selectorsList.Body).should('contain', 'Successfully Updated')
-
+    cy.get(selectorsList.nationality).eq(0).click()
+    cy.contains('Brazilian').click()
+    cy.get(selectorsList.martialStatus).eq(1).click()
+    cy.contains('Married').click()
+    cy.get(selectorsList.bloodType).eq(2).click()
+    cy.contains('AB+').click() */
   })
   it('login - Fail', () => {
     cy.visit('/auth/login')
